@@ -1,0 +1,21 @@
+========= Get token ========
+token : kNXAdT470RLUPy_F8MMgqhtHdyrfqKxeDvQWRCa0:wbPrhxFI1ODHFAlmFvwgrKi74kM=:eyJzY29wZSI6ImV0aGVub3NjYXIiLCJkZWFkbGluZSI6MTQ1MjMyNjc1Mn0=
+========= Upload file ========
+response : [{"hash":"FpDC8XPYT6tqcq5p8UeTG6sH8DYj","key":"test.jpg"},null] 
+result : {"hash":"FpDC8XPYT6tqcq5p8UeTG6sH8DYj","key":"test.jpg"}
+error : null
+
+========= Get token ========
+token : kNXAdT470RLUPy_F8MMgqhtHdyrfqKxeDvQWRCa0:ZklxbRRZ_uW1-tTrzbU9jOsOlKM=:eyJzY29wZSI6ImV0aGVub3NjYXIiLCJkZWFkbGluZSI6MTQ1MjMyNjc3OX0=
+========= Upload file ========
+response : [{"hash":"FpDC8XPYT6tqcq5p8UeTG6sH8DYj","key":"test.jpg"},null] 
+result : {"hash":"FpDC8XPYT6tqcq5p8UeTG6sH8DYj","key":"test.jpg"}
+error : null
+
+========= Get token ========
+token : kNXAdT470RLUPy_F8MMgqhtHdyrfqKxeDvQWRCa0:4mcrYTfj2Lsi1ioNDggU2_X21QM=:eyJzY29wZSI6ImV0aGVub3NjYXIiLCJkZWFkbGluZSI6MTQ1MjMyNjgwNH0=
+========= Upload file ========
+response : [{"hash":"FpDC8XPYT6tqcq5p8UeTG6sH8DYj","key":"test.jpg"},null] 
+result : {"hash":"FpDC8XPYT6tqcq5p8UeTG6sH8DYj","key":"test.jpg"}
+error : null
+
