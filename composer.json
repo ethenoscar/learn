@@ -1,5 +1,8 @@
 {
     "require": {
-        "qiniu/php-sdk": "^7.0"
+        "qiniu/php-sdk": "^7.0",
+        "monolog/monolog": "^1.17",
+        "swiftmailer/swiftmailer": "^5.4",
+        "masterexploder/PHPThumb": "^2.1"
     }
 }

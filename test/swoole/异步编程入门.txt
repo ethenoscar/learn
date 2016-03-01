@@ -1,0 +1,68 @@
+1、sleep/usleep的影响
+
+在异步IO的程序中，不得使用sleep/usleep/time_sleep_until/time_nanosleep。（下文中使用sleep泛指所有睡眠函数）
+
+（1）sleep函数会使进程陷入睡眠阻塞
+（2）直到指定的时间后操作系统才会重新唤醒当前的进程
+（3）sleep过程中，只有信号可以打断
+（4）由于swoole的信号处理是基于signalfd实现的，所以即使发送信号也无法中断sleep
+
+swoole提供的swoole_event_add、swoole_timer_tick、swoole_timer_after、swoole_process::signal、异步swoole_client 在进程sleep后会停止工作。swoole_server也无法再处理新的请求。
+
+实例程序
+
+$serv = new swoole_server("127.0.0.1", 9501);
+$serv->on('receive', function ($serv, $fd, $from_id, $data) {
+    sleep(100);
+    $serv->send($fd, 'Swoole: '.$data);
+});
+$serv->start();
+
+onReceive事件中执行了sleep函数，server在100秒内无法再收到任何客户端请求。
+
+
+2、exit/die函数的影响
+
+在swoole程序中禁止使用exit/die，如果PHP代码中有exit/die，当前工作的Worker进程、Task进程、User进程、以及swoole_process进程会立即退出。
+
+建议使用try/catch的方式替换exit/die，实现中断执行跳出PHP函数调用栈。
+
+//提示 Swoole\ExitException class not found
+//上面的代码只是示例，需要你自己实现ExitException类
+
+function swoole_exit($msg)
+{
+    //php-fpm的环境
+    if (ENV=='php')
+    {
+        exit($msg);
+    }
+    //swoole的环境
+    else
+    {
+        throw new Swoole\ExitException($msg);
+    }
+}
+
+异常处理的方式比exit/die更友好，因为异常是可控的，exit/die不可控。在最外层进行try/catch即可捕获异常，仅终止当前的任务。Worker进程可以继续处理新的请求，而exit/die会导致进程直接退出，当前进程保存的所有变量和资源都会被销毁。如果进程内还有其他任务要处理，遇到exit/die也将全部丢弃。
+
+
+3、while循环的影响
+
+异步程序如果遇到死循环，事件将无法触发。异步IO程序使用Reactor模型，运行过程中必须在reactor->wait处轮询。如果遇到死循环，那么程序的控制权就在while中了，reactor无法得到控制权，无法检测事件，所以IO事件回调函数也将无法触发。
+
+密集运算的代码不是阻塞
+
+实例程序
+
+$serv = new swoole_server("127.0.0.1", 9501);
+$serv->on('receive', function ($serv, $fd, $from_id, $data) {
+    while(1)
+    {
+        $i ++;
+    }
+    $serv->send($fd, 'Swoole: '.$data);
+});
+$serv->start();
+
+onReceive事件中执行了死循环，server在无法再收到任何客户端请求，必须等待循环结束才能继续处理新的事件。
