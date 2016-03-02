@@ -74,16 +74,6 @@ function is_negetive_int($integer,$witch_zero=false){
 }
 
 /**
- * 判断是否浮点数
- * @param  string  $float 浮点数
- * @return boolean        
- */
-function is_float($float){
-	$pattern = '/^(-?\d+)(\.\d+)?$/';
-	return is_meet_pattern($pattern,$float);
-}
-
-/**
  * 判断是否腾讯qq
  * @param  string  $qq qq号码
  * @return boolean     
