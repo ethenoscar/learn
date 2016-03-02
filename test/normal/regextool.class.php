@@ -41,7 +41,7 @@ class regextool {
 	}
 
 	private function _getRegexResult(){
-		if($this->returnMatchResult){
+		if($this->_returnMatchResult){
 			return $this->_matches;
 		}
 		return $this->_isMatch;
@@ -57,6 +57,23 @@ class regextool {
 
 	public function setFixMode($fixMode){
 		$this->_fixMode = $fixMode;
+	}
+
+
+	public function noEmpty($str){
+		return $this->_regex('require',$str);
+	}
+
+	public function isEmail($email){
+		return $this->_regex('email',$email);
+	}
+
+	public function isMobile($mobile){
+		return $this->_regex('mobile',$mobile);
+	}
+
+	public function check($pattern,$subject){
+		return $this->_regex($pattern,$subject);
 	}
 
 }

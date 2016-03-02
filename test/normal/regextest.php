@@ -1,5 +1,7 @@
 <?php
 
+include 'regextool.class.php';
+
 //匹配非空
 $pattern = '/.+/';
 
@@ -15,3 +17,5 @@ $pattern = '/^\w+(\.\w+)*@\w+(\.\w+)+$/';
 //匹配url地址
 $pattern = '/^(https?://)?(\w+\.)+[a-zA-Z]+$/';
 
+$tool = new regextool(true);
+var_dump($tool->isMobile('13480235698'));
